@@ -1,25 +1,26 @@
 from random import randint
+from functools import reduce
 
 def faturamento():
-    faturar = [randint(100, 500) for x in range(1000)]
-
+    faturar = [randint(100, 500) for x in range(10)]
     return faturar
+ 
 
 def preco(*valores, **descontos):
     desconto_p = descontos.get('desc_percentual')
     desconto_f = descontos.get('desc_fixo')
 
 
-    for valor in valores:
-        if desconto_p and desconto_f:
-            (valor - desconto_p) - desconto_f
+    for a in valores:
+        if not desconto_p:
+            valor = [(x-desconto_f) for x in valores]
         else:
-            (valor - desconto_f)
-        return valor
+            valor = [((x*desconto_p)-desconto_f) for x in valores]
+
+    return valor
+    
 
 
-percentual = 7/100
-fixo = 50
-
-print(preco(faturamento()), desc_percentual = percentual, desc_fixo = fixo)
+print(preco(faturamento(), desc_percentual = 0.93, desc_fixo = 50))
+# print(faturamento())
         
